@@ -31,73 +31,6 @@ bool handleInput()
         }
         switch(event.key.keysym.sym)
         {
-            #ifdef FUNKEY
-            case SDLK_u:
-            {
-                keys[B_UP] = state;
-                break;
-            }
-            case SDLK_d:
-            {
-                keys[B_DOWN] = state;
-                break;
-            }
-            case SDLK_l:
-            {
-                keys[B_LEFT] = state;
-                break;
-            }
-            case SDLK_r:
-            {
-                keys[B_RIGHT] = state;
-                break;
-            }
-            case SDLK_a:
-            {
-                keys[B_A] = state;
-                break;
-            }
-            case SDLK_b:
-            {
-                keys[B_B] = state;
-                break;
-            }
-            case SDLK_x:
-            {
-                keys[B_X] = state;
-                break;
-            }
-            case SDLK_y:
-            {
-                keys[B_Y] = state;
-                break;
-            }
-            case SDLK_m:
-            {
-                keys[B_TL] = state;
-                break;
-            }
-            case SDLK_n:
-            {
-                keys[B_TR] = state;
-                break;
-            }
-            case SDLK_q:
-            {
-                running = 0;
-                break;
-            }
-            case SDLK_k:
-            {
-                keys[B_SELECT] = state;
-                break;
-            }
-            case SDLK_s:
-            {
-                keys[B_START] = state;
-                break;
-            }
-            #else
             case SDLK_UP:
             {
                 keys[B_UP] = state;
@@ -118,52 +51,51 @@ bool handleInput()
                 keys[B_RIGHT] = state;
                 break;
             }
-            case SDLK_a:
+            case SDLK_LCTRL:
             {
                 keys[B_A] = state;
                 break;
             }
-            case SDLK_s:
+            case SDLK_LALT:
             {
                 keys[B_B] = state;
                 break;
             }
-            case SDLK_x:
+            case SDLK_LSHIFT:
             {
                 keys[B_X] = state;
                 break;
             }
-            case SDLK_y:
+            case SDLK_SPACE:
             {
                 keys[B_Y] = state;
                 break;
             }
-            case SDLK_u:
+            case SDLK_TAB:
             {
                 keys[B_TL] = state;
                 break;
             }
-            case SDLK_i:
+            case SDLK_BACKSPACE:
             {
                 keys[B_TR] = state;
                 break;
             }
-            case SDLK_q:
+            case SDLK_w:
             {
                 keys[B_MENU] = state;
                 break;
             }
-            case SDLK_n:
+            case SDLK_o:
             {
                 keys[B_SELECT] = state;
                 break;
             }
-            case SDLK_m:
+            case SDLK_p:
             {
                 keys[B_START] = state;
                 break;
             }
-            #endif
             default:
             {
                 break;

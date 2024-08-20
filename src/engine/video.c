@@ -1,12 +1,16 @@
 #include "video.h"
 
 #include <SDL/SDL.h>
+#include <SDL/SDL_ttf.h>
+
 #define CHAD_API_IMPL
-#include "zbuffer.h"
+//#include "zbuffer.h"
+#include "gltext.h"
 #include "GL/gl.h"
 
-SDL_Surface* screen;
-ZBuffer* frameBuffer = NULL;
+SDL_Surface* screen, *text_surface;
+TTF_Font * font;
+//ZBuffer* frameBuffer = NULL;
 
 mat4 mPerspective;
 mat4 mOrtho;
@@ -39,12 +43,29 @@ mat4 ortho(float b, float t, float l, float r, float n, float f)
 
 void initVideo(vec4 clearColor, vec4 viewport, float fov, float near, float far)
 {
-    screen = SDL_SetVideoMode(WINX, WINY, 16, SDL_SWSURFACE);
+	SDL_Init(SDL_INIT_VIDEO);
+	
+    SDL_GL_SetAttribute( SDL_GL_RED_SIZE, 5 );
+    SDL_GL_SetAttribute( SDL_GL_GREEN_SIZE, 6 );
+    SDL_GL_SetAttribute( SDL_GL_BLUE_SIZE, 5 );
+    SDL_GL_SetAttribute( SDL_GL_DEPTH_SIZE, 16 );
+    SDL_GL_SetAttribute( SDL_GL_DOUBLEBUFFER, 1 );
+	
+    screen = SDL_SetVideoMode(WINX, WINY, 16, SDL_HWSURFACE | SDL_OPENGL);
+    
+	TTF_Init();
+	font = TTF_OpenFont("font.ttf", 16);
+	if (!font)
+	{
+		printf("FONT ERROR %s\n", SDL_GetError());
+		exit(0);
+	}
+	
 	SDL_ShowCursor(SDL_DISABLE);
-
     //Initialize TinyGL
-	frameBuffer = ZB_open(WINX, WINY, ZB_MODE_5R6G5B, 0);
-	glInit(frameBuffer);
+	//frameBuffer = ZB_open(WINX, WINY, ZB_MODE_5R6G5B, 0);
+	//glInit(frameBuffer);
+	
 	glShadeModel(GL_FLAT);
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 	glEnable(GL_DEPTH_TEST);
@@ -61,6 +82,8 @@ void initVideo(vec4 clearColor, vec4 viewport, float fov, float near, float far)
 	mOrtho = ortho(0, WINX, 0, WINY, -32, 0);
 }
 
+extern void Final_text();
+
 void clearFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -68,23 +91,19 @@ void clearFrame()
 
 void flipFrame()
 {
-    if(SDL_MUSTLOCK(screen))
-    {
-        SDL_LockSurface(screen);
-    }
-    ZB_copyFrameBuffer(frameBuffer, screen->pixels, screen->pitch);
-	if(SDL_MUSTLOCK(screen))
-    {
-		SDL_UnlockSurface(screen);
-    }
-	SDL_Flip(screen);
+    SDL_GL_SwapBuffers( );
+    
+
+	//SDL_Flip(screen);
 }
 
 void quitVideo()
 {
-	ZB_close(frameBuffer);
-	glClose();
-
+	//ZB_close(frameBuffer);
+	//glClose();
+	TTF_CloseFont(font);
+	TTF_Quit();
+	SDL_FreeSurface(screen);
     SDL_Quit();
 }
 

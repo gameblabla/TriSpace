@@ -1,15 +1,15 @@
 CC          	= gcc
 
-CFLAGS			= -O3 -flto
-LDFLAGS     	= -lSDL -lSDL_image -lm -lSDL_mixer -lmikmod
+CFLAGS			= -O0 -g3 -Isrc
+LDFLAGS     	= -lSDL -lSDL_image -lm -lSDL_mixer -lSDL_ttf
 
 PNAME			= main.elf
 
-TINGYGL_LIB		= ~/Documents/Projects/FunKey/tinygl/lib/libTinyGL.a
+TINGYGL_LIB		= -lGL
 
-SDL_INCLUDE		= -I/opt/funkey-sdk/arm-funkey-linux-musleabihf/sysroot/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
-TINYGL_INCLUDE	= -I/home/julius/Documents/Projects/FunKey/tinygl/include
-INCLUDES		= -I/opt/funkey-sdk/include $(SDL_INCLUDE) $(TINYGL_INCLUDE)
+SDL_INCLUDE		= -I/usr/include/SDL -D_GNU_SOURCE=1 -D_REENTRANT
+TINYGL_INCLUDE	= -I/usr/include/GL
+INCLUDES		=  $(SDL_INCLUDE) $(TINYGL_INCLUDE)
 
 ifdef TARGET
 include $(TARGET).mk
@@ -31,5 +31,5 @@ $(OBJS): %.o : %.c
 debug: CFLAGS += -DDEBUG=1 -DNO_FPS_LIMIT=1 -g
 debug: $(PNAME)
 
-oclean:
+clean:
 	rm *.o

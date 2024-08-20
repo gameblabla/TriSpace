@@ -73,7 +73,7 @@ void drawUI(bool onStation, Player* player, Npc npcs[], vec3 stationPos, uint8_t
     glBindTexture(GL_TEXTURE_2D, mainTexture);
     glBegin(GL_QUADS);
     //Draw main UI background
-    drawTexQuad(0, 0, 240, 240, UIBH, 0, 0, PTC(239), PTC(239));
+    drawTexQuad(0, 0, 240, WINY, UIBH, 0, 0, PTC(239), PTC(239));
     uint8_t speedTemp = (player->ship.speed / shipTypes[player->ship.type].maxSpeed) * 32;
     if(speedTemp > 0)
     {

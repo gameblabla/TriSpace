@@ -647,10 +647,12 @@ void calcFrame(uint32_t ticks)
 
             if(keyUp(B_UP))
             {
+				printf("Up pressed\n");
                 scrollTitleScreenCursor(-1);
             }
             else if(keyUp(B_DOWN))
             {
+				printf("Down pressed\n");
                 scrollTitleScreenCursor(1);
             }
             else if(keyUp(B_A) || keyUp(B_START))
